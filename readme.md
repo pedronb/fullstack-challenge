@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAEk2zliyMBrAIyXvpfDVd250-rKzOkWvhjj1I32LxhI71JdB1P9-Fk1P4fH92LxBLgQ&usqp=CAU" width="200">
-</p>
-
 # { "developer": "fullstack" }
 
 The objective of this challenge is to evaluate your domain in fullstack development: its organization, style and good practices with code, APIs creation, frameworks knowledge and technologies.
