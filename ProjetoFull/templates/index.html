@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analytics Oncase Challenge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+</head>
+<body>
+    <header class="bg-primary">
+        <form action="/" method="POST">
+            <input type="text" id="first_name" name="first_name" placeholder="First name">
+            <input type="text" id="last_name" name="last_name" placeholder="Last name">
+            <input type="number" name="participation" id="participation" placeholder="Participation">
+            <button><b>SEND</b></button>
+        </form>
+    </header>
+
+    <main>
+        <div id="text">
+            <h3>DATA</h3>
+            <p>Ipsum dolor sit, amet consectetur adipisicing elit.</p>
+        </div>
+
+        <div id="container">
+            <div onloadeddata="test()" class="data-container">
+                <table id="table" class="content-table">
+                    <tr>
+                        <th>  </th>
+                        <th class="testing">First Name</th>
+                        <th>Last Name</th>
+                        <th>Participation</th>
+                    </tr>
+
+                    {% for user in users %}
+                    <tr>
+                        <td>{{user.id}}</td>
+                        <td>{{user.first_name}}</td>
+                        <td>{{user.last_name}}</td>
+                        <td>{{user.participation}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                
+                <div class="content-graph">
+                    <canvas id="graph" width="450" height="450"></canvas>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+<script>
+    function getRandomRgb() {
+    var num = Math.round(0xffffff * Math.random());
+    var r = num >> 16;
+    var g = num >> 8 & 255;
+    var b = num & 255;
+    return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+    }
+
+    let table = document.getElementById('table'), sumVal = 0;
+    let names = []
+    let participation = []
+
+    for(i = 1; i < table.rows.length; i++) {
+        sumVal += parseInt(table.rows[i].cells[3].innerHTML) 
+        names.push(table.rows[i].cells[1].innerHTML + ' ' + table.rows[i].cells[2].innerHTML)
+        participation.push(table.rows[i].cells[3].innerHTML)
+    }
+
+    console.log(sumVal)
+    console.log(names)
+    console.log(participation)
+
+    let backColor = []
+    for(let i = 0; i < names.length; i++){
+        backColor.push(getRandomRgb())
+    }
+    console.log(backColor)
+    let ctx = document.getElementById('graph')
+    let graph = new Chart(ctx,{
+        type: 'doughnut',
+    data: {
+        labels: names,
+        datasets: [{
+            data: participation,
+            backgroundColor: backColor, borderWidth: 5 }]
+        }, options:{ legend:{ display: true, position:'right'}}
+    })
+
+</script>
+</html>
